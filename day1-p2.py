@@ -11,6 +11,7 @@ def main():
             continue
         left_list.append(int(ar[0]))
         right_list.append(int(ar[1]))
+    f.close()
     total_dict = Counter(right_list)
     while len(left_list) != 0:
         to_search = left_list.pop()

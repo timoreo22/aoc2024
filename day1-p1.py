@@ -10,6 +10,7 @@ def main():
             continue
         left_list.append(int(ar[0]))
         right_list.append(int(ar[1]))
+    f.close()
     left_list = sorted(left_list)
     right_list = sorted(right_list)
     while len(left_list) != 0:
