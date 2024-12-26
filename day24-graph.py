@@ -39,11 +39,12 @@ def main():
         out = '<' + k + '>' + k
         print('{rank = sink;',id(k), '[label="' + out + '"];}', file=graph)
     for g in gates:
-        outs[g[1]] = id(g)
+        o =  translate(g[1])
+        outs[o] = id(g)
         ins[id(g)].append(g[0][0])
         ins[id(g)].append(g[0][2])
         inp = '|'.join(( '<' + g[0][0] + '>' + g[0][0], '<' + g[0][2] + '>' + g[0][2]))
-        out = '<' + g[1] + '>' + g[1]
+        out = '<' + o + '>' + o
         print(id(g),'[label="{{' + inp +'}|' + g[0][1] +'|{' + out + '}}"];', file=graph)
     for i in ins:
         for fr in ins[i]:
@@ -51,7 +52,24 @@ def main():
                 print(str(outs[fr]) + ':' + fr + '->' + str(i) + ':' + fr +  ';',file=graph)
     print("}", file=graph)
     graph.close()
-    os.system("dot -Tsvg graph.dot -o graph.svg")
+    os.system("dot -Tsvg graph.dot -o graph-orig.svg")
+
+
+def translate(fr):
+    if fr == 'z21':
+        fr = 'shh'
+    elif fr == 'shh':
+        fr = 'z21'
+    elif fr == 'z33':
+        fr = 'dqr'
+    elif fr == 'dqr':
+        fr = 'z33'
+    #extra infos
+    elif fr == 'z39':
+        fr = 'pfw'
+    elif fr == 'pfw':
+        fr = 'z39'
+    return fr
 
 
 if __name__ == '__main__':
